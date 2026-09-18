@@ -1,0 +1,217 @@
+/* =========================================================
+   MotoCare — style.css
+   Semua CSS custom di luar Tailwind utility classes
+   ========================================================= */
+
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f1f5f9;
+  font-family: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Logo ──────────────────────────────────────────────── */
+/* Wordmark MotoCare dengan Syne font */
+.logo-text {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo-text .logo-moto {
+  color: #1D4ED8;
+}
+
+.logo-text .logo-care {
+  color: #111827;
+}
+
+/* versi putih untuk dipakai di atas background gelap */
+.logo-text.logo-white .logo-moto {
+  color: #93c5fd;
+}
+.logo-text.logo-white .logo-care {
+  color: #ffffff;
+}
+
+/* ── Auth Page ─────────────────────────────────────────── */
+.auth-bg {
+  background-color: #f8faff;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(29,78,216,0.07) 0%, transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(99,102,241,0.06) 0%, transparent 50%);
+  min-height: 100vh;
+}
+
+/* Dot grid subtle pattern */
+.auth-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Home Header ───────────────────────────────────────── */
+.home-header {
+  background: #1D4ED8;
+  background-image:
+    radial-gradient(circle at 90% 0%, rgba(99,102,241,0.35) 0%, transparent 60%),
+    radial-gradient(circle at 10% 100%, rgba(29,78,216,0.4) 0%, transparent 50%);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-header::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+
+/* ── App Shell ─────────────────────────────────────────── */
+/* Membatasi lebar maks agar terasa seperti app mobile */
+.app-shell {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #ffffff;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Page wrapper ──────────────────────────────────────── */
+/* Padding bawah agar konten tidak tertutup bottom nav */
+.page {
+  padding-bottom: 80px;
+  min-height: 100vh;
+}
+
+/* ── Bottom Navigation ─────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  z-index: 50;
+}
+
+/* ── Horizontal Scroll Strip ───────────────────────────── */
+/* Dipakai untuk chip motor, slot waktu, filter kategori */
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+.scroll-x::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* ── Page Transition ───────────────────────────────────── */
+.fade-in {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Form Focus ────────────────────────────────────────── */
+/* Tailwind ring dipakai sebagai pengganti, nonaktifkan default */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+
+/* ── Status Timeline ───────────────────────────────────── */
+/* Garis vertikal penghubung antar step pada halaman status servis */
+.status-line {
+  position: relative;
+}
+
+.status-line::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e2e8f0;
+  z-index: 0;
+}
+
+/* ── Booking Step Indicator ────────────────────────────── */
+.step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-dot.active {
+  background: #1D4ED8;
+  color: #ffffff;
+}
+
+.step-dot.done {
+  background: #10B981;
+  color: #ffffff;
+}
+
+.step-dot.inactive {
+  background: #e2e8f0;
+  color: #94a3b8;
+}
+
+/* ── Card ──────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+/* ── Loyalty Progress Bar ──────────────────────────────── */
+.progress-bar-track {
+  background: #e2e8f0;
+  border-radius: 9999px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #1D4ED8, #3b82f6);
+  transition: width 0.6s ease;
+}
