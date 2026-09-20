@@ -2,50 +2,170 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>MotoCare</title>
-
-  <!-- Google Fonts: Syne (logo) + Inter (body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CSS (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- React & Babel (CDN) -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Tailwind custom color config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary:        '#1D4ED8',
-            'primary-dark': '#1e3a8a',
-            'primary-light':'#EFF6FF',
-            accent:         '#F59E0B',
-            success:        '#10B981',
-            danger:         '#EF4444'
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Custom styles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- React mounts here -->
-  <div id="root"></div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <span class="header-logo">💰 Purchase Tracker</span>
+      <nav class="nav">
+        <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+        <button class="nav-btn" data-page="transaksi">Semua Transaksi</button>
+      </nav>
+    </div>
+  </header>
 
-  <!-- App logic (React/JSX) -->
-  <script type="text/babel" src="app.js"></script>
+  <!-- MAIN -->
+  <main class="main">
 
+    <!-- ===== PAGE: DASHBOARD ===== -->
+    <section id="page-dashboard" class="page active">
+
+      <!-- Summary Cards -->
+      <div class="cards">
+        <div class="card card--balance">
+          <p class="card-label">Saldo Saat Ini</p>
+          <p class="card-value" id="summary-balance">Rp 0</p>
+        </div>
+        <div class="card card--income">
+          <p class="card-label">Total Pemasukan</p>
+          <p class="card-value" id="summary-income">Rp 0</p>
+        </div>
+        <div class="card card--expense">
+          <p class="card-label">Total Pengeluaran</p>
+          <p class="card-value" id="summary-expense">Rp 0</p>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="section-header">
+        <h2 class="section-title">Transaksi Terbaru</h2>
+        <button class="btn btn--primary" id="btn-open-modal">+ Tambah Transaksi</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="table-recent">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Keterangan</th>
+              <th>Kategori</th>
+              <th>Jenis</th>
+              <th class="text-right">Nominal</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-recent">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+        <p class="empty-msg" id="empty-recent">Belum ada transaksi. Yuk mulai catat!</p>
+      </div>
+
+    </section>
+
+    <!-- ===== PAGE: SEMUA TRANSAKSI ===== -->
+    <section id="page-transaksi" class="page">
+
+      <div class="section-header">
+        <h2 class="section-title">Semua Transaksi</h2>
+        <button class="btn btn--primary" id="btn-open-modal-2">+ Tambah Transaksi</button>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="table-all">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Keterangan</th>
+              <th>Kategori</th>
+              <th>Jenis</th>
+              <th class="text-right">Nominal</th>
+              <th class="text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-all">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+        <p class="empty-msg" id="empty-all">Belum ada transaksi.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== MODAL: TAMBAH / EDIT TRANSAKSI ===== -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Tambah Transaksi</h3>
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <form id="form-transaksi" class="modal-body" novalidate>
+
+        <!-- Jenis -->
+        <div class="form-group">
+          <label class="form-label">Jenis Transaksi</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="jenis" value="pemasukan" checked />
+              <span class="radio-pill radio-pill--income">Pemasukan</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="jenis" value="pengeluaran" />
+              <span class="radio-pill radio-pill--expense">Pengeluaran</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Keterangan -->
+        <div class="form-group">
+          <label class="form-label" for="input-keterangan">Keterangan</label>
+          <input class="form-input" type="text" id="input-keterangan" placeholder="Contoh: Gaji bulan ini" required />
+        </div>
+
+        <!-- Kategori -->
+        <div class="form-group">
+          <label class="form-label" for="input-kategori">Kategori</label>
+          <select class="form-input" id="input-kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Makanan">Makanan</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Belanja">Belanja</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Pendidikan">Pendidikan</option>
+            <option value="Hiburan">Hiburan</option>
+            <option value="Kebutuhan">Kebutuhan</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <!-- Nominal -->
+        <div class="form-group">
+          <label class="form-label" for="input-nominal">Nominal (Rp)</label>
+          <input class="form-input" type="number" id="input-nominal" placeholder="Contoh: 500000" min="1" required />
+        </div>
+
+        <!-- Tanggal -->
+        <div class="form-group">
+          <label class="form-label" for="input-tanggal">Tanggal</label>
+          <input class="form-input" type="date" id="input-tanggal" required />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn--ghost" id="btn-cancel">Batal</button>
+          <button type="submit" class="btn btn--primary" id="btn-simpan">Simpan</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>
